@@ -1,5 +1,8 @@
 import {readdir} from "node:fs/promises";
 import {EOL} from "node:os";
+import fs from "node:fs";
+import {open} from "node:fs/promises";
+import {stdout} from "node:process";
 
 import {UsageError} from "./cli.js";
 
@@ -43,4 +46,13 @@ export const commandsObj = {
     });
     return lines.join(EOL);
   },
+
+  cat: async (path) => {
+    try {
+      const fileStream = (await open(path)).createReadStream();
+      return fileStream;
+    } catch(err) {
+      throw new UsageError(`cat command`);
+    }
+  }
 };
