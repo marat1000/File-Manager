@@ -1,6 +1,7 @@
-import {open, readdir, writeFile} from "node:fs/promises";
+import {default as fs, open, readdir, writeFile} from "node:fs/promises";
 import {resolve} from "node:path";
 import {EOL} from "node:os";
+import path from "node:path";
 
 import {UsageError} from "./cli.js";
 
@@ -60,6 +61,21 @@ export const commandsObj = {
       await writeFile(filePath, ``, {flag: `w+`});
     } catch (err) {
       throw new UsageError(`add command`);
+    }
+  },
+
+  rename: async (paths) => {
+    const [oldPath, newPath] = paths.split(` `);
+    try {
+      const newPathExists = await fs.access(newPath)
+        .then(() => true)
+        .catch(() => false);
+      if (newPathExists) {
+        throw new Error();
+      }
+      await fs.rename(oldPath, newPath);
+    } catch (error) {
+      throw new Error(`FS operation failed`);
     }
   }
 };
