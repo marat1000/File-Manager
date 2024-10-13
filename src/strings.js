@@ -1,4 +1,4 @@
-import {EOL} from "node:os"
+import {EOL} from "node:os";
 
 import {args} from "./args.js";
 
