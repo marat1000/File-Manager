@@ -56,6 +56,5 @@ function parseQuery(str) {
   while (i !== str.length && str[i] !== ` `) {
     i++;
   }
-  console.dir([str.slice(0, i), str.slice(i + 1)])
   return [str.slice(0, i), str.slice(i + 1).trim()];
 }
